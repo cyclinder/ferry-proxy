@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"strings"
 
-	registries2 "github.com/DaoCloud-OpenSource/ferry-proxy/pkg/registries"
+	"github.com/DaoCloud-OpenSource/ferry-proxy/pkg/registries"
 )
 
 func init() {
-	registries2.StreamHandlerRegistry.Register("http_direct", NewHttpDirect)
+	registries.StreamHandlerRegistry.Register("http_direct", NewHttpDirect)
 }
 
 type Config struct {
@@ -19,7 +19,7 @@ type Config struct {
 	Body string
 }
 
-func NewHttpDirect(config json.RawMessage) (registries2.StreamHandler, error) {
+func NewHttpDirect(config json.RawMessage) (registries.StreamHandler, error) {
 	var conf Config
 	err := json.Unmarshal(config, &conf)
 	if err != nil {

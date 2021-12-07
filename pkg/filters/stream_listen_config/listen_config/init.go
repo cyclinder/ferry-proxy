@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 
-	registries2 "github.com/DaoCloud-OpenSource/ferry-proxy/pkg/registries"
+	"github.com/DaoCloud-OpenSource/ferry-proxy/pkg/registries"
 )
 
 func init() {
-	registries2.StreamListenConfigRegistry.Register("listen_config", NewListenConfig)
+	registries.StreamListenConfigRegistry.Register("listen_config", NewListenConfig)
 }
 
 type Config struct {
@@ -17,7 +17,7 @@ type Config struct {
 	Port    uint16 `json:"port"`
 }
 
-func NewListenConfig(config json.RawMessage) (registries2.StreamListenConfig, error) {
+func NewListenConfig(config json.RawMessage) (registries.StreamListenConfig, error) {
 	var conf Config
 	err := json.Unmarshal(config, &conf)
 	if err != nil {

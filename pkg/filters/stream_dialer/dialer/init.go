@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 
-	registries2 "github.com/DaoCloud-OpenSource/ferry-proxy/pkg/registries"
+	"github.com/DaoCloud-OpenSource/ferry-proxy/pkg/registries"
 )
 
 func init() {
-	registries2.StreamDialerRegistry.Register("dialer", NewDialer)
+	registries.StreamDialerRegistry.Register("dialer", NewDialer)
 }
 
 type Config struct {
@@ -17,7 +17,7 @@ type Config struct {
 	Port    uint16 `json:"port"`
 }
 
-func NewDialer(config json.RawMessage) (registries2.StreamDialer, error) {
+func NewDialer(config json.RawMessage) (registries.StreamDialer, error) {
 	var conf Config
 	err := json.Unmarshal(config, &conf)
 	if err != nil {

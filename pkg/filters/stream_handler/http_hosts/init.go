@@ -4,13 +4,12 @@ import (
 	"encoding/json"
 	"strings"
 
-	registries2 "github.com/DaoCloud-OpenSource/ferry-proxy/pkg/registries"
-
+	"github.com/DaoCloud-OpenSource/ferry-proxy/pkg/registries"
 	"github.com/wzshiming/hostmatcher"
 )
 
 func init() {
-	registries2.StreamHandlerRegistry.Register("http_hosts", NewHttpHosts)
+	registries.StreamHandlerRegistry.Register("http_hosts", NewHttpHosts)
 }
 
 type Config struct {
@@ -22,7 +21,7 @@ type ConfigRoute struct {
 	Cluster string   `json:"cluster"`
 }
 
-func NewHttpHosts(config json.RawMessage) (registries2.StreamHandler, error) {
+func NewHttpHosts(config json.RawMessage) (registries.StreamHandler, error) {
 	var conf Config
 	err := json.Unmarshal(config, &conf)
 	if err != nil {
@@ -30,14 +29,14 @@ func NewHttpHosts(config json.RawMessage) (registries2.StreamHandler, error) {
 	}
 
 	httpHosts := &HttpHosts{
-		Hosts: map[string]registries2.StreamHandler{},
+		Hosts: map[string]registries.StreamHandler{},
 	}
 
 	for _, host := range conf.Hosts {
 		if host.Cluster == "" {
 			continue
 		}
-		route := registries2.StreamHandlerInstance.Get(host.Cluster)
+		route := registries.StreamHandlerInstance.Get(host.Cluster)
 		for _, domain := range host.Domains {
 			if domain == "" || domain == "*" {
 				httpHosts.Default = route
@@ -55,7 +54,7 @@ func NewHttpHosts(config json.RawMessage) (registries2.StreamHandler, error) {
 		}
 	}
 	if httpHosts.Default == nil {
-		httpHosts.Default = registries2.StreamHandlerInstance.Get("default")
+		httpHosts.Default = registries.StreamHandlerInstance.Get("default")
 	}
 	return httpHosts, nil
 }
