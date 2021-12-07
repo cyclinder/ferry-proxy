@@ -1,0 +1,8 @@
+{
+  "name": "target-default",
+  "cluster": [
+    {
+      "endpoint": "endpoint-1-default"
+    }
+  ]
+}

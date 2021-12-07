@@ -1,0 +1,7 @@
+{
+  "name": "endpoint-1-default",
+  "endpoint": {
+    "address": "example.org",
+    "port": 80
+  }
+}

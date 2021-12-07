@@ -1,0 +1,12 @@
+{
+  "name": "http-default",
+  "router": {
+    "name": "http_hosts",
+    "hosts" : [
+      {
+        "domains": ["*"],
+        "cluster": "target-default"
+      }
+    ]
+  }
+}
